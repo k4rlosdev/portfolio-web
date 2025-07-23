@@ -8,3 +8,4 @@ Este es mi portafolio web, construido con **Astro**.
 - **HTML5** - Estructura semántica
 - **CSS3** - Estilos personalizados
 - **JavaScript/TypeScript** - Interactividad y lógica
+- **[Tailwind CSS](https://tailwindcss.com/)** - Framework de estilos utility-first
