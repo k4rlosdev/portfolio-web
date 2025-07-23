@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev --host",
+    "format": "prettier --write .",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -13,6 +14,8 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.1.11",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier": "3.6.2",
     "tailwindcss": "4.1.11"
   }
 }

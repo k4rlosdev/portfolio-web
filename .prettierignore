@@ -1,0 +1,22 @@
+### Prettier ###
+
+# Dependency
+node_modules
+
+# Compiled binary
+dist
+.astro
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# lockfiles
+package-lock.json
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Environment variables
+.env
