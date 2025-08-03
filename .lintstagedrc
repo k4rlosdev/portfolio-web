@@ -1,0 +1,4 @@
+{
+  "*.{astro,ts,tsx}": ["npm run format"],
+  "*.{css,md,json,mjs}": "npm run format"
+}
