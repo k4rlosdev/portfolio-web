@@ -1,0 +1,237 @@
+---
+import Menu from '@/icons/Menu.astro';
+import Close from '@/icons/Close.astro';
+import ArrowUp from '@/icons/Arrow-up.astro';
+
+interface MenuLink {
+  href: string;
+  label: string;
+}
+
+const menuLinks: MenuLink[] = [
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#about', label: 'About' },
+  { href: '#contact', label: 'Contact' }
+];
+---
+
+<div class="fixed top-0 left-0 z-50 w-full">
+  <div class="z-10 flex w-full justify-end p-2 lg:p-4">
+    <button
+      id="menu-open"
+      class="bg-secondary cursor-pointer rounded-lg border-2 p-2"
+    >
+      <Menu class="text-primary h-8 w-8 p-1 lg:h-12 lg:w-12" />
+    </button>
+  </div>
+</div>
+<div
+  id="menu-overlay"
+  class="bg-secondary text-primary fixed top-0 left-0 z-50 flex h-screen w-full flex-col overflow-y-hidden"
+  style="clip-path: polygon(0% 0%,100% 0%,100% 0%,0% 0%)"
+>
+  <div class="flex w-full flex-shrink-0 justify-end p-2 lg:p-4">
+    <button id="menu-close" class="cursor-pointer rounded-lg border-2 p-2">
+      <Close class="h-8 w-8 p-1 lg:h-12 lg:w-12" />
+    </button>
+  </div>
+  <div class="grid w-full flex-1 grid-cols-1 lg:gap-12 xl:grid-cols-[1fr_2fr]">
+    <div
+      class="hidden h-full px-12 py-6 xl:flex xl:flex-col xl:justify-between"
+    >
+      <div class="py-2">
+        <div class="h-[300px] w-full" id="menu-image-holder">
+          <img
+            src="/images/img-menu-1.webp"
+            alt="Cancha de futbol"
+            class="aspect-ratio-16/9 h-full w-full object-cover"
+          />
+        </div>
+        <p
+          class="text-primary/90 mt-4 mb-4 text-center leading-6 font-semibold"
+        >
+          On the court and in the code, creativity always finds a way to
+          surprise.
+        </p>
+      </div>
+      <div class="flex w-full items-center justify-between">
+        <div class="flex items-center gap-6 py-4">
+          <a
+            class="transition-transform duration-300 ease-in-out hover:scale-125"
+            href="https://github.com/k4rlosdev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/icons/github.svg"
+              alt="Logo de GitHub"
+              width="24"
+              height="24"
+            />
+          </a>
+          <a
+            class="transition-transform duration-300 ease-in-out hover:scale-125"
+            href="https://www.linkedin.com/in/k4rlosdev/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/icons/linkedin.svg"
+              alt="Logo de LinkedIn"
+              width="24"
+              height="24"
+            />
+          </a>
+          <a
+            class="transition-transform duration-300 ease-in-out hover:scale-125"
+            href="https://x.com/k4rlosdev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/icons/x.svg" alt="Logo de X" width="24" height="24" />
+          </a>
+        </div>
+        <a
+          href="mailto:carlosdavidmartinezmedrano@gmail.com"
+          class="hover:bg-tertiary hover:text-primary border-tertiary border px-6 py-3 transition-all duration-500 ease-in hover:scale-110"
+          >Contact Me</a
+        >
+      </div>
+    </div>
+    <nav
+      class="menu-links flex h-full w-full flex-col items-center justify-center gap-1 xl:items-end xl:gap-4"
+    >
+      <a
+        href="/"
+        class="group hover:bg-primary hover:text-secondary flex w-full items-center justify-between px-6 py-2 transition-colors duration-500 ease-in"
+        style="clip-path: polygon(0% 0%,100% 0%,100% 100%,0% 100%)"
+      >
+        <p
+          class="menu-link-item-holder font-russo text-5xl leading-none font-bold uppercase lg:text-8xl"
+        >
+          Home
+        </p>
+        <ArrowUp
+          class="text-secondary hidden size-12 rotate-45 transform transition-all duration-500 group-hover:block"
+        />
+      </a>
+      {
+        menuLinks.map(
+          (link: MenuLink): Element => (
+            <a
+              href={link.href}
+              class="group hover:bg-primary hover:text-secondary flex w-full items-center justify-between px-6 py-2 transition-colors duration-500 ease-in"
+              style="clip-path: polygon(0% 0%,100% 0%,100% 100%,0% 100%)"
+            >
+              <p class="menu-link-item-holder font-russo text-5xl leading-none font-bold uppercase lg:text-8xl">
+                {link.label}
+              </p>
+              <ArrowUp class="text-secondary hidden size-12 rotate-45 transform transition-all duration-500 group-hover:block" />
+            </a>
+          )
+        )
+      }
+    </nav>
+  </div>
+</div>
+
+<script>
+  import { gsap } from 'gsap';
+
+  let isMenuOpen = false;
+  let tl: gsap.core.Timeline;
+
+  document.addEventListener('DOMContentLoaded', function (): void {
+    gsap.set('.menu-link-item-holder', { y: 125 });
+    gsap.set('#menu-close', { scale: 0, opacity: 0 });
+    gsap.set('#menu-open', { scale: 1, opacity: 1 });
+    gsap.set('#menu-image-holder', { opacity: 0, scale: 0 });
+
+    tl = gsap
+      .timeline({
+        paused: true
+      })
+      .to('#menu-overlay', {
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+        duration: 1.5,
+        ease: 'power4.inOut'
+      })
+      .to(
+        '#menu-open',
+        {
+          scale: 0,
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.inOut'
+        },
+        0
+      )
+      .to(
+        '#menu-close',
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.3,
+          ease: 'power2.inOut'
+        },
+        0.2
+      )
+      .to('.menu-link-item-holder', {
+        y: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'back.inOut',
+        delay: -0.8
+      })
+      .to(
+        '#menu-image-holder',
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          ease: 'circ.inOut'
+        },
+        0.7
+      );
+
+    function toggleMenu(): void {
+      isMenuOpen = !isMenuOpen;
+
+      if (isMenuOpen) {
+        tl.play();
+      } else {
+        tl.reverse();
+      }
+    }
+
+    const menuOpen = document.querySelector('#menu-open') as HTMLElement;
+    const menuClose = document.querySelector('#menu-close') as HTMLElement;
+
+    menuOpen.addEventListener('click', toggleMenu);
+    menuClose.addEventListener('click', toggleMenu);
+
+    document
+      .querySelectorAll('.menu-link-item-holder')
+      .forEach((item: Element): void => {
+        item.addEventListener('click', (event: Event): void => {
+          const target = event.target as HTMLElement;
+          const linkElement = target.closest('a') as HTMLAnchorElement;
+
+          if (linkElement) {
+            const href = linkElement.getAttribute('href');
+
+            if (href === '/') {
+              event.preventDefault();
+
+              tl.reverse();
+              history.pushState('', document.title, window.location.pathname);
+              window.scrollTo({ top: 0 });
+            }
+
+            toggleMenu();
+          }
+        });
+      });
+  });
+</script>
