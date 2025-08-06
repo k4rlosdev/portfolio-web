@@ -2,17 +2,17 @@
 
 @font-face {
   font-family: 'Russo One';
-  src: url('../fonts/RussoOne-Regular.ttf') format('truetype');
+  src: url('../fonts/RussoOne-Regular.woff2') format('woff2');
   font-weight: 400;
 }
 @font-face {
   font-family: 'Cloister Black';
-  src: url('../fonts/CloisterBlack.ttf') format('truetype');
+  src: url('../fonts/CloisterBlack.woff2') format('woff2');
   font-weight: 400;
 }
 @font-face {
   font-family: 'Inter';
-  src: url('../fonts/Inter-Regular.ttf') format('truetype');
+  src: url('../fonts/Inter-Regular.woff2') format('woff2');
   font-weight: 400;
 }
 
