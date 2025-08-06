@@ -1,0 +1,131 @@
+---
+import ArrowUp from '@/icons/Arrow-up.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout>
+  <main
+    class="text-primary relative mx-auto h-screen max-w-screen overflow-hidden"
+  >
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      class="absolute inset-0 z-[-1] h-full w-full object-cover"
+    >
+      <source src="/videos/video-404-1.mp4" type="video/mp4" />
+      Tu navegador no soporta videos HTML5.
+    </video>
+    <section
+      class="grid h-full w-full grid-cols-1 lg:grid-cols-5 lg:grid-rows-5"
+    >
+      <div class="lg:col-span-5 lg:row-span-3">
+        <div
+          class="grid h-full w-full grid-cols-1 gap-4 lg:grid-cols-5 lg:grid-rows-5"
+        >
+          <div
+            class="flex h-full w-full flex-col justify-between p-4 lg:col-span-3 lg:row-span-5 lg:p-8 xl:p-12"
+          >
+            <h1
+              class="font-cloister w-full text-center text-6xl break-words md:text-start md:text-8xl lg:tracking-tighter xl:text-9xl"
+            >
+              Page Not Found
+            </h1>
+            <p
+              class="text-tertiary font-russo mt-16 text-3xl font-bold md:text-6xl"
+            >
+              It's more hidden than a bug in production on a Friday night.
+            </p>
+          </div>
+          <div
+            class="h-full w-full p-2 lg:col-span-2 lg:col-start-4 lg:row-span-5 lg:p-8 xl:p-12"
+          >
+            <div
+              class="flex h-full w-full flex-col items-center justify-center lg:items-end lg:justify-end"
+            >
+              <a
+                href="/"
+                class="hover:bg-tertiary hover:text-primary border-tertiary border px-6 py-3 transition-all duration-500 ease-in hover:scale-110"
+                ><ArrowUp class="inline-block h-4 w-4 -rotate-90" /> Go to Home</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-5 lg:row-span-2 lg:row-start-4">
+        <div
+          class="border-t-primary flex h-full w-full items-center justify-center border-t-4 xl:justify-between"
+        >
+          <div
+            class="flex h-full w-full items-center overflow-hidden xl:max-w-3/4"
+            id="error-message-container"
+          >
+            <div class="flex hover:cursor-default" id="scrolling-strip">
+              <span
+                class="font-russo text-[28vh] leading-[95%] font-bold whitespace-nowrap xl:text-[35vh]"
+                >&nbsp;404 -
+              </span>
+            </div>
+          </div>
+          <div
+            class="border-l-primary hidden h-full max-w-1/4 border-l-4 xl:block"
+          >
+            <img
+              src="/images/img-404-1.gif"
+              alt="Hombre furioso golpeando una computadora"
+              class="h-full w-full object-cover"
+              width="500"
+              height="400"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<script>
+  import gsap from 'gsap';
+
+  const container = document.getElementById(
+    'error-message-container'
+  ) as HTMLElement;
+  const strip = document.getElementById('scrolling-strip') as HTMLElement;
+
+  let animation: gsap.core.Tween | null = null;
+
+  function cloneContentUntilFull(): void {
+    let currentWidth = strip.scrollWidth;
+    const containerWidth = container.offsetWidth;
+
+    while (currentWidth < containerWidth * 2) {
+      strip.innerHTML += strip.innerHTML;
+      currentWidth = strip.scrollWidth;
+    }
+  }
+
+  function startInfiniteScroll(): void {
+    const fullWidth = strip.scrollWidth;
+
+    animation = gsap.to(strip, {
+      x: `-=${fullWidth / 2}`,
+      duration: 10,
+      ease: 'linear',
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize(
+          (x: string): number => parseFloat(x) % (fullWidth / 2)
+        )
+      }
+    });
+  }
+
+  window.addEventListener('load', (): void => {
+    cloneContentUntilFull();
+    startInfiniteScroll();
+
+    container.addEventListener('mouseenter', () => animation?.pause());
+    container.addEventListener('mouseleave', () => animation?.play());
+  });
+</script>
