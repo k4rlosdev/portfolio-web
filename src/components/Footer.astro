@@ -1,0 +1,72 @@
+---
+import InstagramLogo from '@/icons/Instagram-logo.astro';
+import XLogo from '@/icons/X-logo.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer
+  class="font-inter bg-secondary text-primary px-6 py-8 md:fixed md:bottom-0 md:left-0 md:z-0 md:w-full md:px-12 md:py-10 lg:px-16"
+>
+  <div
+    class="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+  >
+    <a
+      href="tel:+50377957311"
+      class="text-xl font-bold tracking-tight whitespace-nowrap md:text-3xl lg:text-4xl"
+    >
+      <span class="text-lg md:text-xl lg:text-2xl">(+503)</span> 7795 7311
+    </a>
+    <a
+      href="mailto:carlosdavidmartinezmedrano@gmail.com"
+      class="text-lg font-bold tracking-tight break-all hover:underline md:text-xl md:break-normal lg:text-3xl xl:text-5xl"
+    >
+      carlosdavidmartinezmedrano@gmail.com
+    </a>
+  </div>
+  <div
+    class="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="text-sm leading-relaxed">
+      <p>Santa Ana, El Salvador</p>
+      <p>{year}</p>
+    </div>
+    <div class="flex flex-row gap-4 text-sm md:flex-col md:gap-1 md:text-right">
+      <a
+        href="https://thebillone.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-secondary text-primary/80 transition-colors"
+        >The Bill One</a
+      >
+      <a
+        href="#contact"
+        class="hover:text-primary/60 underline underline-offset-2 transition-colors"
+        >Work with me</a
+      >
+    </div>
+  </div>
+  <hr class="border-primary/15 mb-6" />
+  <div class="flex items-center justify-end">
+    <div class="flex items-center gap-4">
+      <a
+        href="https://www.instagram.com/k4rlosdev/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+        class="text-primary hover:text-primary/50 transition-colors duration-200"
+      >
+        <InstagramLogo class="h-5 w-5" />
+      </a>
+      <a
+        href="https://x.com/k4rlosdev"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="X(Twitter)"
+        class="text-primary hover:text-primary/50 transition-colors"
+      >
+        <XLogo class="h-5 w-5" />
+      </a>
+    </div>
+  </div>
+</footer>

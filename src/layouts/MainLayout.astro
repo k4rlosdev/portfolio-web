@@ -1,4 +1,6 @@
 ---
+import Footer from '@/components/Footer.astro';
+
 import '@/styles/global.css';
 ---
 
@@ -10,8 +12,40 @@ import '@/styles/global.css';
     <title>Carlos Martínez | k4rlosdev</title>
   </head>
   <body>
-    <main>
+    <main id="main-content" class="bg-primary relative z-10">
       <slot />
     </main>
+    <Footer />
+    <script>
+      import Lenis from 'lenis';
+      import gsap from 'gsap';
+
+      const mainEl = document.getElementById('main-content') as HTMLElement;
+      const footerEl = document.querySelector('footer') as HTMLElement;
+
+      const lenis = new Lenis({
+        lerp: 0.07,
+        smoothWheel: true,
+        syncTouch: true,
+        touchMultiplier: 1.5
+      });
+
+      gsap.ticker.add((time: number): void => {
+        lenis.raf(time * 1000);
+      });
+
+      gsap.ticker.lagSmoothing(0);
+
+      function syncFooterSpace(): void {
+        if (!mainEl || !footerEl) return;
+
+        mainEl.style.marginBottom =
+          window.innerWidth >= 768 ? `${footerEl.offsetHeight}px` : '0px';
+      }
+
+      syncFooterSpace();
+
+      window.addEventListener('resize', syncFooterSpace);
+    </script>
   </body>
 </html>
