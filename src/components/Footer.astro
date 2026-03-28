@@ -1,7 +1,4 @@
 ---
-import InstagramLogo from '@/icons/Instagram-logo.astro';
-import XLogo from '@/icons/X-logo.astro';
-
 const year = new Date().getFullYear();
 ---
 
@@ -31,12 +28,12 @@ const year = new Date().getFullYear();
       <p>Santa Ana, El Salvador</p>
       <p>{year}</p>
     </div>
-    <div class="flex flex-row gap-4 text-sm md:flex-col md:gap-1 md:text-right">
+    <div class="flex flex-col gap-2 text-right text-sm md:gap-1">
       <a
         href="https://thebillone.com/"
         target="_blank"
         rel="noopener noreferrer"
-        class="hover:text-secondary text-primary/80 transition-colors"
+        class="hover:text-primary/60 text-xl transition-colors md:text-2xl lg:text-4xl"
         >The Bill One</a
       >
       <a
@@ -50,13 +47,32 @@ const year = new Date().getFullYear();
   <div class="flex items-center justify-end">
     <div class="flex items-center gap-4">
       <a
-        href="https://www.instagram.com/k4rlosdev/"
+        href="https://www.github.com/k4rlosdev/"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Instagram"
+        aria-label="GitHub"
         class="text-primary hover:text-primary/50 transition-colors duration-200"
       >
-        <InstagramLogo class="h-5 w-5" />
+        <img
+          src="/icons/github.svg"
+          alt="Logo de GitHub"
+          width="24"
+          height="24"
+        />
+      </a>
+      <a
+        href="https://www.linkedin.com/in/k4rlosdev/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        class="text-primary hover:text-primary/50 transition-colors duration-200"
+      >
+        <img
+          src="/icons/linkedin.svg"
+          alt="Logo de LinkedIn"
+          width="24"
+          height="24"
+        />
       </a>
       <a
         href="https://x.com/k4rlosdev"
@@ -65,7 +81,7 @@ const year = new Date().getFullYear();
         aria-label="X(Twitter)"
         class="text-primary hover:text-primary/50 transition-colors"
       >
-        <XLogo class="h-5 w-5" />
+        <img src="/icons/x.svg" alt="Logo de X" width="24" height="24" />
       </a>
     </div>
   </div>
