@@ -31,3 +31,20 @@
 body {
   @apply font-inter bg-primary text-secondary;
 }
+
+html,
+body {
+  overflow-x: clip;
+}
+
+#main-content > section {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.overlap-panel {
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+}
