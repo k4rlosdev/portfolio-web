@@ -1,4 +1,4 @@
 {
-  "*.{astro,ts,tsx}": ["npm run format"],
-  "*.{css,md,json,mjs}": "npm run format"
+  "*.{astro,ts,tsx}": "prettier --write",
+  "*.{css,md,json,mjs}": "prettier --write"
 }

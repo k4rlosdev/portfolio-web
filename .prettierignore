@@ -13,7 +13,7 @@ logs
 npm-debug.log*
 
 # lockfiles
-package-lock.json
+pnpm-lock.yaml
 
 # Diagnostic reports
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

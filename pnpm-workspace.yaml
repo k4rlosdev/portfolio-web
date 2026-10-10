@@ -1,0 +1,8 @@
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+strictPeerDependencies: true
+allowBuilds:
+  '@tailwindcss/oxide@4.1.11': true
+  'esbuild@0.25.8': true
+  'fsevents@2.3.3': true
+  'sharp@0.33.5': true
