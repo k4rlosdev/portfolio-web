@@ -34,22 +34,31 @@ import '@/styles/global.css';
         (section: HTMLElement): HTMLElement | null =>
           section.querySelector(':scope > .overlap-panel') as HTMLElement | null
       );
+
       const media = gsap.matchMedia();
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const lenis = new Lenis({
-        lerp: 0.07,
-        smoothWheel: true,
-        syncTouch: true,
-        touchMultiplier: 1.5
-      });
+      media.add('(prefers-reduced-motion: no-preference)', (): (() => void) => {
+        const lenis = new Lenis({
+          lerp: 0.07,
+          smoothWheel: true
+        });
 
-      gsap.ticker.add((time: number): void => {
-        lenis.raf(time * 1000);
-      });
+        lenis.on('scroll', ScrollTrigger.update);
 
-      gsap.ticker.lagSmoothing(0);
+        const updateLenis = (time: number): void => {
+          lenis.raf(time * 1000);
+        };
+
+        gsap.ticker.add(updateLenis);
+        gsap.ticker.lagSmoothing(0);
+
+        return (): void => {
+          gsap.ticker.remove(updateLenis);
+          lenis.destroy();
+        };
+      });
 
       function syncFooterSpace(): void {
         if (!mainEl || !footerEl) return;
@@ -77,57 +86,63 @@ import '@/styles/global.css';
       function initOverlappingSections(): void {
         if (sections.length < 2) return;
 
-        media.add('(min-width: 768px)', (): (() => void) => {
-          sections.forEach((section: HTMLElement, index: number): void => {
-            const panel = panels[index];
+        media.add(
+          '(min-width: 768px) and (prefers-reduced-motion: no-preference)',
+          (): (() => void) => {
+            sections.forEach((section: HTMLElement, index: number): void => {
+              const panel = panels[index];
 
-            gsap.set(section, {
-              zIndex: index + 1
-            });
-
-            if (panel) {
-              gsap.set(panel, {
-                transformOrigin: 'bottom left',
-                willChange: 'transform'
+              gsap.set(section, {
+                zIndex: index + 1
               });
 
-              if (index > 0) {
-                gsap.set(panel, { rotation: 12 });
-                gsap.to(panel, {
-                  rotation: 0,
-                  ease: 'none',
-                  scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'top 25%',
-                    scrub: true
-                  }
+              if (panel) {
+                gsap.set(panel, {
+                  transformOrigin: 'bottom left',
+                  willChange: 'transform'
                 });
+
+                if (index > 0) {
+                  gsap.set(panel, { rotation: 12 });
+                  gsap.to(panel, {
+                    rotation: 0,
+                    ease: 'none',
+                    scrollTrigger: {
+                      trigger: section,
+                      start: 'top bottom',
+                      end: 'top 25%',
+                      scrub: true
+                    }
+                  });
+                }
               }
-            }
 
-            if (index === sections.length - 1) return;
+              if (index === sections.length - 1) return;
 
-            ScrollTrigger.create({
-              trigger: section,
-              start: 'bottom bottom',
-              end: 'bottom top',
-              pin: true,
-              pinSpacing: false,
-              anticipatePin: 1
+              ScrollTrigger.create({
+                trigger: section,
+                start: 'bottom bottom',
+                end: 'bottom top',
+                pin: true,
+                pinSpacing: false,
+                anticipatePin: 1
+              });
             });
-          });
 
-          ScrollTrigger.refresh();
+            ScrollTrigger.refresh();
 
-          return (): void => {
+            return (): void => {
+              resetSections();
+            };
+          }
+        );
+
+        media.add(
+          '(max-width: 767px), (prefers-reduced-motion: reduce)',
+          (): void => {
             resetSections();
-          };
-        });
-
-        media.add('(max-width: 767px)', (): void => {
-          resetSections();
-        });
+          }
+        );
       }
 
       syncFooterSpace();

@@ -8,10 +8,10 @@ import MainLayout from '@/layouts/MainLayout.astro';
     class="text-primary relative mx-auto h-screen max-w-screen overflow-hidden"
   >
     <video
-      autoplay
       loop
       muted
       playsinline
+      preload="metadata"
       class="absolute inset-0 z-[-1] h-full w-full object-cover"
     >
       <source src="/videos/video-404-1.mp4" type="video/mp4" />
@@ -28,7 +28,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
             class="flex h-full w-full flex-col justify-between p-4 lg:col-span-3 lg:row-span-5 lg:p-8 xl:p-12"
           >
             <h1
-              class="font-cloister w-full text-center text-6xl break-words md:text-start md:text-8xl lg:tracking-tighter xl:text-9xl"
+              class="font-cloister w-full text-center text-6xl wrap-break-word md:text-start md:text-8xl lg:tracking-tighter xl:text-9xl"
             >
               Page Not Found
             </h1>
@@ -74,7 +74,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
             <img
               src="/images/img-404-1.gif"
               alt="Hombre furioso golpeando una computadora"
-              class="h-full w-full object-cover"
+              class="h-full w-full object-cover motion-reduce:hidden"
               width="500"
               height="400"
             />
@@ -92,8 +92,15 @@ import MainLayout from '@/layouts/MainLayout.astro';
     'error-message-container'
   ) as HTMLElement;
   const strip = document.getElementById('scrolling-strip') as HTMLElement;
+  const backgroundVideo = document.querySelector('video') as HTMLVideoElement;
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  );
+
+  const originalStripContent = strip.innerHTML;
 
   let animation: gsap.core.Tween | null = null;
+  let pageLoaded = false;
 
   function cloneContentUntilFull(): void {
     let currentWidth = strip.scrollWidth;
@@ -121,11 +128,35 @@ import MainLayout from '@/layouts/MainLayout.astro';
     });
   }
 
-  window.addEventListener('load', (): void => {
+  function syncMotionPreference(): void {
+    if (prefersReducedMotion.matches) {
+      animation?.kill();
+      animation = null;
+      strip.innerHTML = originalStripContent;
+      backgroundVideo.pause();
+      return;
+    }
+
+    void backgroundVideo.play().catch(() => {});
+
+    if (!pageLoaded || animation) return;
+
     cloneContentUntilFull();
     startInfiniteScroll();
+  }
 
-    container.addEventListener('mouseenter', () => animation?.pause());
-    container.addEventListener('mouseleave', () => animation?.play());
-  });
+  container.addEventListener('mouseenter', () => animation?.pause());
+  container.addEventListener('mouseleave', () => animation?.play());
+
+  window.addEventListener(
+    'load',
+    (): void => {
+      pageLoaded = true;
+      syncMotionPreference();
+    },
+    { once: true }
+  );
+
+  prefersReducedMotion.addEventListener('change', syncMotionPreference);
+  syncMotionPreference();
 </script>

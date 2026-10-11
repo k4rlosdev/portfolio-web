@@ -31,7 +31,7 @@ const menuLinks: MenuLink[] = [
   class="bg-secondary text-primary fixed top-0 left-0 z-50 flex h-screen w-full flex-col overflow-y-hidden"
   style="clip-path: polygon(0% 0%,100% 0%,100% 0%,0% 0%)"
 >
-  <div class="flex w-full flex-shrink-0 justify-end p-2 lg:p-4">
+  <div class="flex w-full shrink-0 justify-end p-2 lg:p-4">
     <button id="menu-close" class="cursor-pointer rounded-lg border-2 p-2">
       <Close class="h-8 w-8 p-1 lg:h-12 lg:w-12" />
     </button>
@@ -41,7 +41,7 @@ const menuLinks: MenuLink[] = [
       class="hidden h-full px-12 py-6 xl:flex xl:flex-col xl:justify-between"
     >
       <div class="py-2">
-        <div class="h-[300px] w-full" id="menu-image-holder">
+        <div class="h-75 w-full" id="menu-image-holder">
           <img
             src="/images/img-menu-1.webp"
             alt="Cancha de futbol"
@@ -142,6 +142,10 @@ const menuLinks: MenuLink[] = [
   let isMenuOpen = false;
   let tl: gsap.core.Timeline;
 
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  );
+
   document.addEventListener('DOMContentLoaded', function (): void {
     gsap.set('.menu-link-item-holder', { y: 125 });
     gsap.set('#menu-close', { scale: 0, opacity: 0 });
@@ -195,8 +199,20 @@ const menuLinks: MenuLink[] = [
         0.7
       );
 
+    prefersReducedMotion.addEventListener('change', (): void => {
+      if (prefersReducedMotion.matches) {
+        tl.progress(isMenuOpen ? 1 : 0);
+      }
+    });
+
     function toggleMenu(): void {
       isMenuOpen = !isMenuOpen;
+
+      if (prefersReducedMotion.matches) {
+        tl.progress(isMenuOpen ? 1 : 0);
+
+        return;
+      }
 
       if (isMenuOpen) {
         tl.play();
