@@ -1,10 +1,21 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://k4rlos.dev',
+  integrations: [
+    sitemap({
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+
+        return pathname !== '/404' && pathname !== '/404.html';
+      }
+    })
+  ],
   fonts: [
     {
       provider: fontProviders.local(),

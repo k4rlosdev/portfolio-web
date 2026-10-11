@@ -1,4 +1,6 @@
 ---
+import { siteConfig } from '@/config/site';
+
 const year = new Date().getFullYear();
 ---
 
@@ -9,23 +11,26 @@ const year = new Date().getFullYear();
     class="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
   >
     <a
-      href="tel:+50377957311"
+      href={siteConfig.phone.href}
       class="text-xl font-bold tracking-tight whitespace-nowrap md:text-3xl lg:text-4xl"
     >
-      <span class="text-lg md:text-xl lg:text-2xl">(+503)</span> 7795 7311
+      <span class="text-lg md:text-xl lg:text-2xl">
+        {siteConfig.phone.countryCode}
+      </span>
+      {siteConfig.phone.number}
     </a>
     <a
-      href="mailto:carlosdavidmartinezmedrano@gmail.com"
+      href={`mailto:${siteConfig.email}`}
       class="text-lg font-bold tracking-tight break-all hover:underline md:text-xl md:break-normal lg:text-3xl xl:text-5xl"
     >
-      carlosdavidmartinezmedrano@gmail.com
+      {siteConfig.email}
     </a>
   </div>
   <div
     class="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between"
   >
     <div class="text-sm leading-relaxed">
-      <p>Santa Ana, El Salvador</p>
+      <p>{siteConfig.location.city}, {siteConfig.location.country}</p>
       <p>{year}</p>
     </div>
     <div class="flex flex-col gap-2 text-right text-sm md:gap-1">
@@ -47,7 +52,7 @@ const year = new Date().getFullYear();
   <div class="flex items-center justify-end">
     <div class="flex items-center gap-4">
       <a
-        href="https://www.github.com/k4rlosdev/"
+        href={siteConfig.socialLinks.github}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub"
@@ -61,7 +66,7 @@ const year = new Date().getFullYear();
         />
       </a>
       <a
-        href="https://www.linkedin.com/in/k4rlosdev/"
+        href={siteConfig.socialLinks.linkedin}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
@@ -75,7 +80,7 @@ const year = new Date().getFullYear();
         />
       </a>
       <a
-        href="https://x.com/k4rlosdev"
+        href={siteConfig.socialLinks.x}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="X(Twitter)"

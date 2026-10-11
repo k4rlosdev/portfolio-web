@@ -1,0 +1,63 @@
+---
+import { siteConfig } from '@/config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string | false;
+  noindex?: boolean;
+  image?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  noindex = false,
+  image,
+  jsonLd
+} = Astro.props;
+
+if (!Astro.site) {
+  throw new Error(
+    'Set the site URL in astro.config.mjs to generate SEO metadata.'
+  );
+}
+
+const canonicalURL =
+  canonical === false
+    ? undefined
+    : new URL(canonical ?? Astro.url.pathname, Astro.site).href;
+const socialImageURL = image ? new URL(image, Astro.site).href : undefined;
+---
+
+<meta name="description" content={description} />
+{canonicalURL && <link rel="canonical" href={canonicalURL} />}
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={siteConfig.title} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonicalURL && <meta property="og:url" content={canonicalURL} />}
+{socialImageURL && <meta property="og:image" content={socialImageURL} />}
+
+<meta
+  name="twitter:card"
+  content={socialImageURL ? 'summary_large_image' : 'summary'}
+/>
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{socialImageURL && <meta name="twitter:image" content={socialImageURL} />}
+
+{
+  jsonLd && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')}
+    />
+  )
+}

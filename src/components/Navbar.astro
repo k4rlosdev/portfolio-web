@@ -2,6 +2,7 @@
 import Menu from '@/icons/Menu.astro';
 import Close from '@/icons/Close.astro';
 import ArrowUp from '@/icons/Arrow-up.astro';
+import { siteConfig } from '@/config/site';
 
 interface MenuLink {
   href: string;
@@ -59,7 +60,7 @@ const menuLinks: MenuLink[] = [
         <div class="flex items-center gap-6 py-4">
           <a
             class="transition-transform duration-300 ease-in-out hover:scale-125"
-            href="https://github.com/k4rlosdev"
+            href={siteConfig.socialLinks.github}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -72,7 +73,7 @@ const menuLinks: MenuLink[] = [
           </a>
           <a
             class="transition-transform duration-300 ease-in-out hover:scale-125"
-            href="https://www.linkedin.com/in/k4rlosdev/"
+            href={siteConfig.socialLinks.linkedin}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -85,7 +86,7 @@ const menuLinks: MenuLink[] = [
           </a>
           <a
             class="transition-transform duration-300 ease-in-out hover:scale-125"
-            href="https://x.com/k4rlosdev"
+            href={siteConfig.socialLinks.x}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -93,7 +94,7 @@ const menuLinks: MenuLink[] = [
           </a>
         </div>
         <a
-          href="mailto:carlosdavidmartinezmedrano@gmail.com"
+          href={`mailto:${siteConfig.email}`}
           class="hover:bg-tertiary hover:text-primary border-tertiary border px-6 py-3 transition-all duration-500 ease-in hover:scale-110"
           >Contact Me</a
         >

@@ -1,10 +1,16 @@
 ---
 import ArrowUp from '@/icons/Arrow-up.astro';
 import MainLayout from '@/layouts/MainLayout.astro';
+import { siteConfig } from '@/config/site';
 ---
 
-<MainLayout>
-  <main
+<MainLayout
+  title={`Page Not Found | ${siteConfig.name}`}
+  description={`The page you are looking for could not be found. Return to ${siteConfig.name}'s portfolio.`}
+  canonical={false}
+  noindex
+>
+  <div
     class="text-primary relative mx-auto h-screen max-w-screen overflow-hidden"
   >
     <video
@@ -82,7 +88,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </MainLayout>
 
 <script>

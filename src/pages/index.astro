@@ -6,9 +6,30 @@ import Hero from '@/components/Hero.astro';
 import Navbar from '@/components/Navbar.astro';
 import Projects from '@/components/Projects.astro';
 import MainLayout from '@/layouts/MainLayout.astro';
+import { siteConfig } from '@/config/site';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.name,
+  url: Astro.site?.href,
+  sameAs: Object.values(siteConfig.socialLinks),
+  email: siteConfig.email,
+  telephone: siteConfig.phone.e164,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: siteConfig.location.city,
+    addressCountry: siteConfig.location.countryCode
+  }
+};
 ---
 
-<MainLayout showFooter>
+<MainLayout
+  showFooter
+  title={`${siteConfig.name} | Web Developer in ${siteConfig.location.country}`}
+  description={`Portfolio of ${siteConfig.name}, a web developer from ${siteConfig.location.city}, ${siteConfig.location.country}. Explore selected projects, professional experience, and contact information.`}
+  jsonLd={personSchema}
+>
   <Navbar />
   <Hero />
   <Experience />
