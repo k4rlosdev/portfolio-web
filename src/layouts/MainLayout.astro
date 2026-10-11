@@ -12,6 +12,7 @@ interface Props {
   canonical?: string | false;
   noindex?: boolean;
   image?: string;
+  imageAlt?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -22,6 +23,7 @@ const {
   canonical,
   noindex = false,
   image,
+  imageAlt,
   jsonLd
 } = Astro.props;
 ---
@@ -41,6 +43,7 @@ const {
       canonical={canonical}
       noindex={noindex}
       image={image}
+      imageAlt={imageAlt}
       jsonLd={jsonLd}
     />
   </head>

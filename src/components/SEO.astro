@@ -7,6 +7,7 @@ interface Props {
   canonical?: string | false;
   noindex?: boolean;
   image?: string;
+  imageAlt?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -16,6 +17,7 @@ const {
   canonical,
   noindex = false,
   image,
+  imageAlt,
   jsonLd
 } = Astro.props;
 
@@ -44,6 +46,7 @@ const socialImageURL = image ? new URL(image, Astro.site).href : undefined;
 <meta property="og:description" content={description} />
 {canonicalURL && <meta property="og:url" content={canonicalURL} />}
 {socialImageURL && <meta property="og:image" content={socialImageURL} />}
+{socialImageURL && <meta property="og:image:alt" content={imageAlt ?? title} />}
 
 <meta
   name="twitter:card"
@@ -52,6 +55,11 @@ const socialImageURL = image ? new URL(image, Astro.site).href : undefined;
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 {socialImageURL && <meta name="twitter:image" content={socialImageURL} />}
+{
+  socialImageURL && (
+    <meta name="twitter:image:alt" content={imageAlt ?? title} />
+  )
+}
 
 {
   jsonLd && (
