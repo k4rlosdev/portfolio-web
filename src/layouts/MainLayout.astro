@@ -1,5 +1,6 @@
 ---
 import Footer from '@/components/Footer.astro';
+import { Font } from 'astro:assets';
 
 import '@/styles/global.css';
 ---
@@ -9,6 +10,9 @@ import '@/styles/global.css';
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
+    <Font cssVariable="--font-inter-family" preload />
+    <Font cssVariable="--font-russo-one" />
+    <Font cssVariable="--font-cloister-black" />
     <title>Carlos Martínez | k4rlosdev</title>
   </head>
   <body>

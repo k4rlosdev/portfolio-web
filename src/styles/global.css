@@ -1,25 +1,9 @@
 @import 'tailwindcss';
 
-@font-face {
-  font-family: 'Russo One';
-  src: url('../fonts/RussoOne-Regular.woff2') format('woff2');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Cloister Black';
-  src: url('../fonts/CloisterBlack.woff2') format('woff2');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Inter';
-  src: url('../fonts/Inter-Regular.woff2') format('woff2');
-  font-weight: 400;
-}
-
-@theme {
-  --font-russo: 'Russo One', sans-serif;
-  --font-cloister: 'Cloister Black', serif;
-  --font-inter: 'Inter', sans-serif;
+@theme inline {
+  --font-russo: var(--font-russo-one);
+  --font-cloister: var(--font-cloister-black);
+  --font-inter: var(--font-inter-family);
 
   --color-primary: #e0e0e0;
   --color-secondary: #040200;
